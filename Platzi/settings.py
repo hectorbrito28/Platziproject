@@ -151,7 +151,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = "/profile_images/"
 
 #Añade la imagen a la ruta de MEDIA_URL
-MEDIA_ROOT = os.path.join(BASE_DIR,"profile_imagess")
+MEDIA_ROOT = os.path.join(BASE_DIR,"profile_images","post_images")
 
 
 
@@ -175,7 +175,7 @@ from django.contrib.staticfiles import finders
 if not DEBUG:
     # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR,"static")
+    STATIC_ROOT = os.path.join(BASE_DIR,"static_images","css","js")
 
     # Turn on WhiteNoise storage backend that takes care of compressing static files
     # and creating unique names for each version so they can safely be cached forever.
@@ -183,4 +183,4 @@ if not DEBUG:
 
 
 ###Static
-STATICFILES_DIRS = [BASE_DIR / "static/static_images"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
