@@ -7,9 +7,9 @@ from django.contrib.auth.models import AbstractUser
 class UserWeb(AbstractUser):
     
     profile_picture = models.ImageField(
-        upload_to="media/static_editable/profile_images",
+        upload_to="media/media/static_editable/profile_images",
         blank=True,
-        default="media/static_editable/profile_images/user.png")#Subo la imagen a la ruta de MEDIA_URL
+        default="media/media/static_editable/profile_images/user.png")#Subo la imagen a la ruta de MEDIA_URL
     
     website = models.URLField(max_length=254,blank=True,null=False)
     biography = models.TextField(max_length=500,blank=True,null=False)
