@@ -151,7 +151,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = "/"
 
 #Añade la imagen a la ruta de MEDIA_URL
-MEDIA_ROOT = os.path.join(BASE_DIR,"static_editable")
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
 
 
