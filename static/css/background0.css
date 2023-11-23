@@ -1,0 +1,14 @@
+body {
+    background-image: url("liquid-cheese.png");
+    background-repeat: no-repeat;
+}
+
+
+
+
+#image_field_id{
+    position: relative;
+    overflow: hidden;
+
+  
+}

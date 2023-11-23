@@ -1,0 +1,37 @@
+{% extends 'second_templates/layouts/base.html' %}
+
+{% block head_content %}
+<title>Detail: {{Post.title}}</title>
+{% endblock %}
+
+{% block content %}
+
+
+
+                
+        <div class="container posts-content">
+            <div class="row">
+                <div class="col-lg-6 offset-md-3"><!--Esto lo centra-->
+                    <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="media mb-3">
+                        <img src="{{Post.postimg.url}}" class="d-block ui-w-40 rounded border border-dark" alt="" style="width: 500px; height: 500px;">
+                        
+                        <div class="media-header" >
+                            Titulo: {{Post.title}}
+                        </div>
+
+                        <div class="media-body ml-3">
+                            <div class="text-muted small">Publicado: {{Post.created}}</div>
+                        </div>
+                        </div>
+                        <h5>Description</h5>
+                        <p>{{Post.description}}</p>
+                        <a href="javascript:void(0)" class="ui-rect ui-bg-cover" style="background-image: url('https://bootdey.com/img/Content/avatar/avatar3.png');"></a>
+                    </div>
+                    </div>
+                </div>
+
+
+
+{% endblock %}

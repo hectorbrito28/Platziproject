@@ -1,0 +1,57 @@
+{% extends 'first_templates/layouts/baseforms.html' %}
+{% load static %}
+
+
+{% block head_content %}
+<title>Sign up</title>
+{% endblock %}
+
+
+{% block content %}
+
+{%for m in form.errors %}
+<div class="control-group">
+    <p class="alert alert-danger">
+        El nombre de usuario no esta disponible
+    </p>
+</div>
+{% endfor %}
+
+
+
+<!--Formulario para registrarse-->
+
+<div class="container-fluid ">
+    <div class="row justify-content-md-center">
+        <h2 class="text-center">Registrarse</h2>
+        <div class="col-sm-3 shadow mb-5 rounded border border-2 ">
+
+                <div class="text-center">
+                    <img src="{% static 'static_images/in.png' %}" style="width: 150px; height: 135px; " class="rounded-3 mt-2">
+                </div>
+                
+    
+           
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{form.as_p}}
+
+            <div class="text-center mb-2 " >
+                <button class="btn btn-outline-dark" >Crear cuenta</button>
+            </div>
+            
+           
+            
+        </form>
+
+
+    </div>
+   
+
+    
+    
+
+</div>
+
+{% endblock %}

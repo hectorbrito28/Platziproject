@@ -1,0 +1,39 @@
+{% extends 'second_templates/layouts/base.html' %}
+
+{% block head_content %}
+<title>New post</title>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-sm ">
+    <div class="row justify-content-md-center ">
+        <h2 style="color: white;" class="text-center">Publicar</h2>
+        <div class="col-4 shadow mb-5 rounded border border-2 ">
+                
+           
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{form.as_p}}
+
+            <div class="text-center mb-2 " >
+                <button class="btn btn-outline-light" >Publicar</button>
+            </div>
+            
+        </form>
+        {%for m in messages %}
+            <div class="control-group">
+                {{m}}
+            </div>
+        {% endfor %}
+    </div>
+   
+
+    
+    
+
+</div>
+
+{% endblock %}

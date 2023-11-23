@@ -1,0 +1,29 @@
+
+{% load static %}
+<nav class="navbar bg-light bg-opacity-75 sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'GETTINGPOSTS' %}">
+        <img src= "{%  static 'static_images/instagram.png' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top rounded-3">
+        SendYourGram
+      </a>
+      <a href="{% url 'DETAILS' request.user.id %}"><img src="{{request.user.profile_picture.url}}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top rounded-3 border border-dark"></a>
+      <form class="d-flex" role="search" action="{% url 'Search' %}" method="GET">
+        <input  required="True" name="post_title" class="form-control  me-2" type="search" placeholder="Search post" aria-label="Search" style="border-color: red;">
+        <button class="btn btn-outline-danger"   type="submit">Search</button>
+      </form>
+      <div class="row">
+
+        <div class="col">
+          <a href="{% url 'SHARE_POST' %}" class="btn btn-outline-danger">Publicar</a>
+         
+        </div>
+        <div class="col">
+          <a href="{% url 'Logoutview' %}"><i class="fa-solid fa-arrow-right-from-bracket p-2"></i></a> 
+        </div>
+
+      </div>
+      
+      
+      
+    </div>
+  </nav>

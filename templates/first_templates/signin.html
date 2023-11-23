@@ -1,0 +1,66 @@
+{% extends 'first_templates/layouts/baseforms.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block head_content %}
+<title>Sign in</title>
+{% endblock %}
+
+
+{% block content %}
+<div class="container-sm ">
+    <div class="row justify-content-md-center ">
+        <h2 class="text-center">Iniciar sesion</h2>
+        <div class="col-4 shadow mb-5 rounded border border-2 ">
+
+                <div class="text-center">
+                    <img src="{% static 'static_images/Black_Instagram_icon.svg' %}" style="width: 130px; height: 130px; " class="rounded-3 mt-2">
+                </div>
+                
+    
+           
+        <form method="POST" >
+            {% csrf_token %}
+
+            <p class="mt-5">
+                {% render_field form.username class="form-control border border-dark" placeholder="Nombre de usuario"  %}
+                
+                <!-- -->
+            </p>
+            
+            <p>
+               
+                {% render_field form.password class="form-control border border-dark" placeholder="Contraseña"  %}
+            </p>
+            
+
+            <div class="text-center mb-2 " >
+                <button class="btn btn-outline-dark" >Iniciar sesion</button>
+            </div>
+            
+           
+            
+        </form>
+
+        <label class="mt-2 mb-2">No te has registrado aun?  
+            <a class="btn btn-primary btn-sm mt-2 mb-2" href="{% url 'Signup' %}"> Registrate aqui</a>
+        </label>
+
+        {%for m in form.errors %}
+            <div class="control-group">
+                <p class="alert alert-danger">
+                    Tu contraseña o usuario no coincide, intenta otra vez.
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+    
+   
+
+    
+    
+
+</div>
+
+{% endblock %}
