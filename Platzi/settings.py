@@ -183,4 +183,4 @@ if not DEBUG:
 
 
 ###Static
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static/static_images"]
