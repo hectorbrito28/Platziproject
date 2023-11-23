@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 class UserWeb(AbstractUser):
     
     profile_picture = models.ImageField(
-        upload_to="profile_images/",
+        upload_to="media/static_editable/profile_images",
         blank=True,
         default="static_images/user.png")#Subo la imagen a la ruta de MEDIA_URL
     
