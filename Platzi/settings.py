@@ -170,12 +170,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GEOIP_PATH = f"{BASE_DIR}/geoip/dbip-city-lite-2023-11.mmdb"
 
-
+from django.contrib.staticfiles import finders
 
 if not DEBUG:
     # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR,"static_images","post_images","profile_images")
+    STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
     # Turn on WhiteNoise storage backend that takes care of compressing static files
     # and creating unique names for each version so they can safely be cached forever.
