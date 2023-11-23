@@ -148,7 +148,7 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 STATIC_URL = 'static/'
 
 #Indica la ruta para ver la imagen por URL
-MEDIA_URL = "/profile_images/"
+MEDIA_URL = "/profile_imagess/"
 
 #Añade la imagen a la ruta de MEDIA_URL
 MEDIA_ROOT = os.path.join(BASE_DIR,"static")
