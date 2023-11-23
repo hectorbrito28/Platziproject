@@ -91,12 +91,16 @@ WSGI_APPLICATION = 'Platzi.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 #Base deploy
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Feel free to alter this value to suit your needs.
+#         default='postgresql://postgres:postgres@localhost/postgres',
+#         conn_max_age=600
+#     )
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost/postgres',
-        conn_max_age=600
-    )
+    "default":dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 
