@@ -46,7 +46,7 @@ def completeaccount_middleware(get_response):
                     
                 if not request.user.biography or not request.user.phone_number:
                    
-                    if request.path not in [reverse("Update"),reverse("Logoutview")] and not request.path.startswith("/profile_images/") and not request.path.startswith("/admin/"):
+                    if request.path not in [reverse("Update"),reverse("Logoutview")] and not request.path.startswith("/static/") and not request.path.startswith("/admin/"):
                         messages.success(request,"Necesitas completar tu cuenta antes de ingresar correctamente")
                         return redirect("Update")   
         
