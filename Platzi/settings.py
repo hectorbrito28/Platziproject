@@ -153,8 +153,7 @@ MEDIA_URL = "/profile_images/"
 #Añade la imagen a la ruta de MEDIA_URL
 MEDIA_ROOT = os.path.join(BASE_DIR,"static")
 
-###Static
-STATICFILES_DIRS = [BASE_DIR / "static"]
+
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -173,13 +172,15 @@ GEOIP_PATH = f"{BASE_DIR}/geoip/dbip-city-lite-2023-11.mmdb"
 
 
 
-
-
 if not DEBUG:
     # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
     # Turn on WhiteNoise storage backend that takes care of compressing static files
     # and creating unique names for each version so they can safely be cached forever.
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+###Static
+STATICFILES_DIRS = [BASE_DIR / "static"]
