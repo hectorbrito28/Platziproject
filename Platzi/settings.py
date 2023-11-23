@@ -152,7 +152,7 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 STATIC_URL = 'static/'
 
 #Indica la ruta para ver la imagen por URL
-MEDIA_URL = "static_editable/"
+MEDIA_URL = "media/"
 
 #Añade la imagen a la ruta de MEDIA_URL
 ##
@@ -178,7 +178,7 @@ if not DEBUG:
     # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.
     STATIC_ROOT = os.path.join(BASE_DIR,"static_images")
-    MEDIA_ROOT = os.path.join(BASE_DIR,"media/")
+    MEDIA_ROOT = os.path.join(BASE_DIR,"static_editable")
 
     # Turn on WhiteNoise storage backend that takes care of compressing static files
     # and creating unique names for each version so they can safely be cached forever.
