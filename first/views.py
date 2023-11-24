@@ -28,7 +28,8 @@ config = {
     "storageBucket": "platzi-project-f8b1a.appspot.com",
     "messagingSenderId": "557197086476",
     "appId": "1:557197086476:web:7acc083e9064a561f20329",
-    "measurementId": "G-1TQRX5QZGR"
+    "measurementId": "G-1TQRX5QZGR",
+    "databaseURL": ""
 }
 
 
