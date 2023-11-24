@@ -20,6 +20,31 @@ from .forms import PostForm
 from django.views.generic import DetailView,ListView,CreateView,FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+#DATABASE FIREBASE STORAGE
+
+import pyrebase
+import os
+
+config = {
+    "apiKey": "AIzaSyDbk_txYy6MlM-kg4dImL7MfnjFBRh5-AE",
+    "authDomain": "platzi-project-f8b1a.firebaseapp.com",
+    "projectId": "platzi-project-f8b1a",
+    "storageBucket": "platzi-project-f8b1a.appspot.com",
+    "messagingSenderId": "557197086476",
+    "appId": "1:557197086476:web:7acc083e9064a561f20329",
+    "measurementId": "G-1TQRX5QZGR"
+}
+
+
+firebase = pyrebase.initialize_app(config)
+storage = firebase.storage()
+
+#storage.child(PATH/DIRECTORY_ON_CLOUD).put(PATH_TO_LOCAL_IMAGE  )
+
+
+
+
+
 
 
 def search_post(request):

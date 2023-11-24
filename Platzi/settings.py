@@ -105,9 +105,6 @@ WSGI_APPLICATION = 'Platzi.wsgi.application'
 #     )
 # }
 
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_BUCKET_NAME = 'insta-app-dfdd0'
-
 
 DATABASES = {
     "default":dj_database_url.parse(os.environ.get("DATABASE_URL"))
@@ -197,3 +194,19 @@ if not DEBUG:
 
 ###Static
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+
+STORAGES = {
+    
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+
+}
+
+
+#FIREBASE
+DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
