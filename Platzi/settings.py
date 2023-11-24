@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "widget_tweaks",
-    "storagesfirst"
+    "storages",
     
     #Local apps
     "first",
