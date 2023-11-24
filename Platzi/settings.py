@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import firebase_admin
 from firebase_admin import credentials
 
-cred = credentials.Certificate([BASE_DIR/"insta-app-dfdd0-firebase-adminsdk-pib4i-c003ab51fa.json"])
+cred = credentials.Certificate(["insta-app-dfdd0-firebase-adminsdk-pib4i-c003ab51fa.json"])
 firebase_admin.initialize_app(cred)
 
 
