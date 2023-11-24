@@ -199,7 +199,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STORAGES = {
     
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -209,4 +209,4 @@ STORAGES = {
 
 
 #FIREBASE
-DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+#DEFAULT_FILE_STORAGE = ""
