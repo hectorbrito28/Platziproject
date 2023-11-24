@@ -105,6 +105,8 @@ WSGI_APPLICATION = 'Platzi.wsgi.application'
 #     )
 # }
 
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'insta-app-dfdd0'
 
 
 DATABASES = {
