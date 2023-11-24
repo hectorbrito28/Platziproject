@@ -15,8 +15,20 @@ import os
 import dj_database_url
 
 
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+#Firebase
+import firebase_admin
+from firebase_admin import credentials
+
+cred = credentials.Certificate([BASE_DIR/"insta-app-dfdd0-firebase-adminsdk-pib4i-c003ab51fa.json"])
+firebase_admin.initialize_app(cred)
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "widget_tweaks",
+    "storages"
     
     #Local apps
     "first",
@@ -98,6 +111,10 @@ WSGI_APPLICATION = 'Platzi.wsgi.application'
 #         conn_max_age=600
 #     )
 # }
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'insta-app-dfdd0'
+
 
 DATABASES = {
     "default":dj_database_url.parse(os.environ.get("DATABASE_URL"))
