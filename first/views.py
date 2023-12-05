@@ -3,51 +3,49 @@ from django.shortcuts import redirect
 
 #Utilities
 from django.urls import reverse_lazy,reverse
+import requests
+import secrets
+from django.contrib.auth.hashers import check_password
 #Models
 from second.models import Post
 from .models import UserWeb
-
 
 #forms
 from .forms import CustomUserCreationForm,CustomUserUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 #Class-based views
-from django.views.generic import FormView,UpdateView
+from django.views.generic import FormView
 from django.contrib.auth.views import LoginView ,LogoutView
 
 #DATABASE FIREBASE STORAGE
 
 import pyrebase
-import os
+
+
+
 
 config = {
-    "apiKey": "AIzaSyDbk_txYy6MlM-kg4dImL7MfnjFBRh5-AE",
-    "authDomain": "platzi-project-f8b1a.firebaseapp.com",
-    "projectId": "platzi-project-f8b1a",
-    "storageBucket": "platzi-project-f8b1a.appspot.com",
-    "messagingSenderId": "557197086476",
-    "appId": "1:557197086476:web:7acc083e9064a561f20329",
-    "measurementId": "G-1TQRX5QZGR",
-    "databaseURL": "https://platzi-project-f8b1a-default-rtdb.firebaseio.com/"
+    "apiKey": "AIzaSyCPnGOBb3-RNLw8XFeUzGfjYvb9yuaOhS4",
+    "authDomain": "platzi-gram-af3b9.firebaseapp.com",
+    "projectId": "platzi-gram-af3b9",
+    "storageBucket": "platzi-gram-af3b9.appspot.com",
+    "messagingSenderId": "175087990376",
+    "appId": "1:175087990376:web:e16fa92cd47877f38e6ddd",
+    "measurementId": "G-58ELGL2XGD",
+    "databaseURL" : "",
+    "serviceAccount":"admin_platzigram.json"
 }
 
 
 firebase = pyrebase.initialize_app(config)
+
 storage = firebase.storage()
 
-#storage.child(PATH/DIRECTORY_ON_CLOUD).put(PATH_TO_LOCAL_IMAGE  )
-
-
-
-# Create your views here.
-
+auth = firebase.auth() 
 
 
 class SignupFormView(FormView):
-    
-    
-    model = Post
     
     
     template_name = "first_templates/signup.html"
@@ -66,7 +64,80 @@ class SignupFormView(FormView):
     
     
     def form_valid(self, form):
-        form.save()#Guarda el formulario, es mejor usar createview que formview para crear objetos
+        
+        #Obteniendo contraseña verificada
+        password1 = form.clean_password2()
+        
+        #Obteniendo email
+        email = form.cleaned_data["email"]
+        
+        #Obteniendo imagen
+        profile_picture = form.cleaned_data["profile_picture"]
+        
+        
+        #Creando cuenta en firebase storage
+        try:
+            user = auth.create_user_with_email_and_password(email,password1)
+        except:
+             return self.render_to_response(self.get_context_data(form=form, error= "Email ya existe en la base de datos"))
+            
+
+        #Iniciando sesion en cuenta temporalmente para guardar la imagen de usuario
+        account_created = auth.sign_in_with_email_and_password(email,password1)
+        
+        user_id = account_created["localId"]
+        
+        image_exist = storage.child(f"{user_id}/images/user_images/" + profile_picture.name).get_url(None)
+        
+        response  = requests.get(image_exist)
+        
+        
+        if response.status_code == 200:
+            image_id = str(secrets.token_hex(16))
+            
+            #saving image into firebase storage
+            storage.child(f"{user_id}/images/user_images/" + profile_picture.name + "__" + image_id).put(profile_picture.read(),content_type=profile_picture.content_type)
+            
+            #Get image_url from firebase storage
+            image_url = storage.child(f"{user_id}/images/user_images/" + profile_picture.name + "__" + image_id).get_url(None)
+            
+            #Creating an object task with image_url link 
+            UserWeb.objects.create_user(
+            profile_picture = image_url,
+            first_name = form.cleaned_data["first_name"],
+            last_name = form.cleaned_data["last_name"],
+            username = form.cleaned_data["username"],
+            email = email,
+            password =password1,
+            )
+            
+            
+        
+        else:
+            
+            #saving image into firebase storage
+            storage.child(f"{user_id}/images/user_images/" + profile_picture.name).put(profile_picture.read(),content_type=profile_picture.content_type)
+            
+            #Get image_url from firebase storage
+            image_url = storage.child(f"{user_id}/images/user_images/" + profile_picture.name).get_url(None)
+            
+            #Creating an object task with image_url link 
+            UserWeb.objects.create_user(
+            profile_picture = image_url,
+            first_name = form.cleaned_data["first_name"],
+            last_name = form.cleaned_data["last_name"],
+            username = form.cleaned_data["username"],
+            email = email,
+            password =password1,
+            )
+            
+        
+        
+        
+        
+        
+        
+        #form.save()#Guarda el formulario, es mejor usar createview que formview para crear objetos
         return super().form_valid(form)
 
 
@@ -80,6 +151,37 @@ class LoginUserView(LoginView):
     redirect_field_name = reverse_lazy("GETTINGPOSTS")
     
     redirect_authenticated_user = True
+    
+    def form_valid(self, form):
+        
+        
+        user = UserWeb.objects.filter(username=form.cleaned_data["username"])
+        
+        user = user[0]
+        
+        email = user.email
+        
+        password_encoded = user.password
+        
+        password_form = form.cleaned_data["password"]
+        
+        if check_password(password_form,password_encoded):
+            
+            
+            firebase_user = auth.sign_in_with_email_and_password(email,password_form)
+        
+        
+            #Coloca la session de auth-firebase en session del request
+            self.request.session["user_firebase"] = firebase_user
+            
+            print("Sesion iniciada")
+            
+           
+
+        
+        
+        return super().form_valid(form)
+
 
 
 class LogoutUserView(LogoutView):
@@ -87,12 +189,21 @@ class LogoutUserView(LogoutView):
     template_name = "first_templates/signin.html"
 
    
-class UpdateUserView(LoginRequiredMixin,UpdateView):
+class UpdateUserView(LoginRequiredMixin,FormView):
     
     model = UserWeb
     template_name = "first_templates/update_account.html"
     #fields = ["biography","profile_picture","phone_number"]
     form_class = CustomUserUpdateForm
+    
+    
+    def get_initial(self):
+        form_values = {
+            "biography":self.request.user.biography,
+            "phone_number":self.request.user.phone_number,
+        }
+        return form_values
+
     
     def get_object(self):
         return self.request.user
@@ -100,6 +211,62 @@ class UpdateUserView(LoginRequiredMixin,UpdateView):
     def get_success_url(self):
         pk = self.request.user.pk
         return reverse("DETAILS",kwargs={"pk":pk})
+
+    def form_valid(self, form) :
+        
+        
+        image = form.cleaned_data["profile_picture"]
+        
+        user_id = self.request.session["user_firebase"]["localId"]
+        
+        image_exist = storage.child(f"{user_id}/images/user_images/" + image.name).get_url(None)
+        
+        response  = requests.get(image_exist)
+        
+        
+        if response.status_code == 200:
+            image_id = str(secrets.token_hex(16))
+            
+            #saving image into firebase storage
+            storage.child(f"{user_id}/images/user_images/" + image.name + "__" + image_id).put(image.read(),content_type=image.content_type)
+            
+            #Get image_url from firebase storage
+            image_url = storage.child(f"{user_id}/images/user_images/" + image.name + "__" + image_id).get_url(None)
+            
+            #Updating self-user with image_url link 
+            
+            user = UserWeb.objects.get(id=self.request.user.id)
+            
+            user.profile_picture = image_url
+            
+            user.biography = form.cleaned_data["biography"]
+            
+            user.phone_number = form.cleaned_data["phone_number"]
+        
+            user.save()
+            
+        
+        else:
+            
+            #saving image into firebase storage
+            storage.child(f"{user_id}/images/user_images/" + image.name).put(image.read(),content_type=image.content_type)
+            
+            #Get image_url from firebase storage
+            image_url = storage.child(f"{user_id}/images/user_images/" + image.name).get_url(None)
+            
+            #Updating self-user with image_url link 
+            user = UserWeb.objects.get(id=self.request.user.id)
+            
+            user.profile_picture = image_url
+            
+            user.biography = form.cleaned_data["biography"]
+            
+            user.phone_number = form.cleaned_data["phone_number"]
+            
+            user.save()
+        
+        return super().form_valid(form)
+
 
 
 

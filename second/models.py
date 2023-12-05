@@ -11,7 +11,7 @@ class Post(models.Model):
     
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    postimg  = models.ImageField(upload_to="media/media/static_editable/post_images")
+    postimg  = models.URLField()
     created = models.DateTimeField(auto_now_add=True)
     
     class Meta:

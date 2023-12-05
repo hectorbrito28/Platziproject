@@ -13,7 +13,7 @@
         <div class="col-4 shadow mb-5 rounded border border-2 ">
 
             <div class="media" >
-                <img src="{{user.profile_picture.url}}" class="mr-3 rounded-5 rounded-top-0 border border-5" style="height: 50px; width: 50px;">
+                <img src="{{user.profile_picture}}" class="mr-3 rounded-5 rounded-top-0 border border-5" style="height: 50px; width: 50px;">
                 <h4 class="h5" style="color: white;">{{user.username}}</h4>
             </div>
 
@@ -22,7 +22,7 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{form}}
-
+                
                 
 
                 <div class="text-center mb-2 mt-2" >

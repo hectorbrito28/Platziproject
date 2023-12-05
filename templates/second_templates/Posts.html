@@ -17,7 +17,7 @@
         <div class="col-md-6 offset-md-3  mb-3 border border-3 rounded border border-dark" style="background-color: white;">
 
             <div class="media mt-5">
-                <a href="{% url 'DETAILS' p.from_user.id %}"><img src="{{p.from_user.profile_picture.url}}" alt="{{p.from_user.username}}" class="mr-3 rounded-5 border border-2 border border-primary" style="height: 50px; width: 50px;"></a>
+                <a href="{% url 'DETAILS' p.from_user.id %}"><img src="{{p.from_user.profile_picture}}" alt="{{p.from_user.username}}" class="mr-3 rounded-5 border border-2 border border-primary" style="height: 50px; width: 50px;"></a>
                 
                 
                 <div class="media-body" >
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <a href="{% url 'DETAILSPOST' p.pk %}"><img src="{{p.postimg.url}}" alt="{{p.from_user.username}}" class="img-fluid mt-3 border rounded border border-2 mb-3"  style="height: 20rem; width: 50rem;"></a>
+            <a href="{% url 'DETAILSPOST' p.pk %}"><img src="{{p.postimg}}" alt="{{p.from_user.username}}" class="img-fluid mt-3 border rounded border border-2 mb-3"  style="height: 20rem; width: 50rem;"></a>
             
             
         </div>

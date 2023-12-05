@@ -9,14 +9,6 @@
 
 {% block content %}
 
-{%for m in form.errors %}
-<div class="control-group">
-    <p class="alert alert-danger">
-        El nombre de usuario no esta disponible
-    </p>
-</div>
-{% endfor %}
-
 
 
 <!--Formulario para registrarse-->
@@ -36,6 +28,8 @@
             {% csrf_token %}
 
             {{form.as_p}}
+
+            <p>{{error}}</p>
 
             <div class="text-center mb-2 " >
                 <button class="btn btn-outline-dark" >Crear cuenta</button>

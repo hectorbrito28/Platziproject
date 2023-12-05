@@ -6,7 +6,7 @@
         <img src= "{%  static 'static_images/instagram.png' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top rounded-3">
         SendYourGram
       </a>
-      <a href="{% url 'DETAILS' request.user.id %}"><img src="{{request.user.profile_picture.url}}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top rounded-3 border border-dark"></a>
+      <a href="{% url 'DETAILS' request.user.id %}"><img src="{{request.user.profile_picture}}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top rounded-3 border border-dark"></a>
       <form class="d-flex" role="search" action="{% url 'Search' %}" method="GET">
         <input  required="True" name="post_title" class="form-control  me-2" type="search" placeholder="Search post" aria-label="Search" style="border-color: red;">
         <button class="btn btn-outline-danger"   type="submit">Search</button>

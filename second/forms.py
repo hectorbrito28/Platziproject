@@ -1,7 +1,8 @@
 from django import forms
 from .models import Post
 
-class PostForm(forms.ModelForm):
+class PostForm(forms.Form):
+    
     title = forms.CharField(
         label="Titulo",
         max_length=250,
@@ -15,7 +16,3 @@ class PostForm(forms.ModelForm):
         label="Imagen",
         widget=forms.FileInput(
             attrs={"class":"form-control"}))
-
-    class Meta:
-        model = Post
-        fields = ["title","description","postimg"]

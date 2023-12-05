@@ -10,22 +10,23 @@ from .models import UserWeb
 from django.contrib.auth.admin import UserAdmin
 
 #Formularios
-from .forms import CustomUserChangeForm,CustomUserCreationForm
+from .forms import CustomUserCreationForm,CustomUserUpdateForm
 
 # Register your models here.
 
 
 #admin.site.register(UserWeb)
 
-
+#FALTO AÑADIR PARA ENCRIPTAR LA CONTRASEÑA
 
 #Aqui tengo que crear otro usuario admin que le da parametros de creacion y cambio mediante los formularios
 #creados en forms.py que añaden seguridad a ciertos campos como es la contraseña
 #le doy la posibilidad de cambiar con CustomUserChangeForm y la de crear con UserCreationForm
 #La diferencia con este y los demas, es que este tiene password hasheada y mas
 #Y le añado al custom user admin los campos que se encuentran en userADMIN
+
 class CustomUserAdmin(UserAdmin):
-    form = CustomUserChangeForm
+    form = CustomUserUpdateForm
     add_form = CustomUserCreationForm
     fieldsets = UserAdmin.fieldsets 
     #AÑADIENDO CAMPOS A LA CREACION DE
@@ -51,12 +52,13 @@ class CustomUserAdmin(UserAdmin):
             }
         )
     )
+    
 
 
 #Luego que se le da el acceso a crear y modificar usuarios mediante los change y creation forms
 #Se registra en el panel de admin
 #Pero haciendo que herede de este mismo de CustomUserAdmin
-@admin.register(UserWeb)
+
 class UserWebAdmin(CustomUserAdmin):
     """Modifying display on django site"""
     
@@ -114,9 +116,13 @@ class UserWebAdmin(CustomUserAdmin):
     )
     
     readonly_fields = ["created","modified"]
+    
+    
 
 
 
+
+admin.site.register(UserWeb)
 
 #Al crear un usuario se podran colocar todos los datos en un solo template solo funciona con llaves foraneas
 # class UserWebInline(admin.StackedInline):
